@@ -1,6 +1,7 @@
 package org.casaaccoglienza.santanna.casaaccoglienzasantanna.controllers;
 
 import org.casaaccoglienza.santanna.casaaccoglienzasantanna.entities.Appartamento;
+import org.casaaccoglienza.santanna.casaaccoglienzasantanna.services.AppartamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +22,22 @@ public class AppartamentoController {
         model.addAttribute("appartamenti", appartamenti);
         return "appartamento/list";
     }
+    @GetMapping("/home")
+    public String home(Model model) {
 
+        return "home";
+    }
     @GetMapping("/create")
     public String createAppartamentoForm(Model model) {
         model.addAttribute("appartamento", new Appartamento());
+        model.addAttribute("successMessage", "Appartement mis à jour avec succès !");
         return "appartamento/create";
     }
 
     @PostMapping("/save")
     public String saveAppartamento(@ModelAttribute Appartamento appartamento) {
         appartamentoService.saveAppartamento(appartamento);
+
         return "redirect:/appartamenti";
     }
 
@@ -38,6 +45,7 @@ public class AppartamentoController {
     public String editAppartamentoForm(@PathVariable Long id, Model model) {
         Appartamento appartamento = appartamentoService.getAppartamentoById(id).orElseThrow(() -> new RuntimeException("Appartamento not found"));
         model.addAttribute("appartamento", appartamento);
+        model.addAttribute("successMessage", "Appartement mis à jour avec succès !");
         return "appartamento/edit";
     }
 
@@ -45,6 +53,7 @@ public class AppartamentoController {
     public String updateAppartamento(@PathVariable Long id, @ModelAttribute Appartamento appartamento) {
         appartamento.setId(id);
         appartamentoService.saveAppartamento(appartamento);
+
         return "redirect:/appartamenti";
     }
 
@@ -53,4 +62,5 @@ public class AppartamentoController {
         appartamentoService.deleteAppartamento(id);
         return "redirect:/appartamenti";
     }
+    public void image(){}
 }

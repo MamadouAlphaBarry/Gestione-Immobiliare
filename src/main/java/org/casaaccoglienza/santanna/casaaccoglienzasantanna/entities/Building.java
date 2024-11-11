@@ -1,13 +1,17 @@
 package org.casaaccoglienza.santanna.casaaccoglienzasantanna.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import lombok.*;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "maison")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 public class Maison {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
