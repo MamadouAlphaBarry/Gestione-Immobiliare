@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Appartements</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        .detail-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        .caption-overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .caption-overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Liste des Appartements</h1>
+
+    <!-- Liste des Appartements -->
+    <div class="detail-card">
+        <h2>Appartement Numéro 1</h2>
+        <p class="mb-1"><strong>Superficie:</strong> 45 m²</p>
+        <p class="mb-1"><strong>Maison:</strong> Maison A</p>
+        <p class="mb-1"><strong>Étage:</strong> 2</p>
+        <p><strong>Description:</strong> Appartement lumineux avec balcon et vue sur la ville.</p>
+
+        <!-- Galerie d'Images -->
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400" alt="Salon moderne" class="img-fluid">
+                <div class="caption-overlay">
+                    <p>Salon moderne</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400" alt="Chambre spacieuse" class="img-fluid">
+                <div class="caption-overlay">
+                    <p>Chambre spacieuse</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400" alt="Cuisine équipée" class="img-fluid">
+                <div class="caption-overlay">
+                    <p>Cuisine équipée</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-card">
+        <h2>Appartement Numéro 2</h2>
+        <p class="mb-1"><strong>Superficie:</strong> 75 m²</p>
+        <p class="mb-1"><strong>Maison:</strong> Maison B</p>
+        <p class="mb-1"><strong>Étage:</strong> 3</p>
+        <p><strong>Description:</strong> Grand appartement avec une belle vue et une grande terrasse.</p>
+
+        <!-- Galerie d'Images -->
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400" alt="Vue sur le balcon" class="img-fluid">
+                <div class="caption-overlay">
+                    <p>Vue sur le balcon</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400" alt="Salle de bain" class="img-fluid">
+                <div class="caption-overlay">
+                    <p>Salle de bain</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400" alt="Salle à manger" class="img-fluid">
+                <div class="caption-overlay">
+                    <p>Salle à manger</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-card">
+        <h2>Appartement Numéro 3</h2>
+        <p class="mb-1"><strong>Superficie:</strong> 60 m²</p>
+        <p class="mb-1"><strong>Maison:</strong> Maison C</p>
+        <p class="mb-1"><strong>Étage:</strong> 1</p>
+        <p><strong>Description:</strong> Appartement cosy avec accès direct au jardin.</p>
+
+        <!-- Galerie d'Images -->
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400" alt="Jardin privé" class="img-fluid">
+                <div class="caption-overlay">
+                    <p>Jardin privé</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400" alt="Cuisine moderne" class="img-fluid">
+                <div class="caption-overlay">
+                    <p>Cuisine moderne</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400" alt="Chambre avec vue" class="img-fluid">
+                <div class="caption-overlay">
+                    <p>Chambre avec vue</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

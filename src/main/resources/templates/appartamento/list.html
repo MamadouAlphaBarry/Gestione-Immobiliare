@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Appartamenti</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<div class="container mt-5">
+    <h1 class="mb-4">Liste des Appartements</h1>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Rechercher un appartement" aria-label="Search" th:action="@{/appartamento/list}" method="get">
+                <button class="btn btn-outline-success" type="submit">Recherche</button>
+            </form>
+        </div>
+        <div class="col-md-4 text-end">
+            <a th:href="@{/appartamenti/create}" class="btn btn-primary">Ajouter un Appartement</a>
+        </div>
+    </div>
 
+    <!-- Check if the list is empty -->
+    <div th:if="${#lists.isEmpty(appartamenti)}" class="alert alert-warning" role="alert">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Aucun Appartement Disponible</h5>
+                <p class="card-text">Il n'y a actuellement aucun appartement à afficher. Veuillez ajouter un nouvel appartement.</p>
+                <a th:href="@{/appartamenti/create}" class="btn btn-primary">Ajouter un Appartement</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display the table only if there are apartments -->
+    <div th:if="${not #lists.isEmpty(appartamenti)}">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Numéro</th>
+                <th>Superficie (m²)</th>
+                <th>Maison</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appartamento : ${appartamenti}">
+                <td th:text="${appartamento.id}"></td>
+                <td th:text="${appartamento.numero}"></td>
+                <td th:text="${appartamento.superficie}"></td>
+                <td th:text="${appartamento.maison.nom}"></td>
+                <td>
+                    <a th:href="@{/appartamento/edit/{id}(id=${appartamento.id})}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a th:href="@{/appartamento/delete/{id}(id=${appartamento.id})}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet appartement ?');">Supprimer</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

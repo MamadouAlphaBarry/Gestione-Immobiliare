@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #5a5af0;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .file-upload {
+            display: none;
+        }
+
+        .custom-upload {
+            background-color: #5a5af0;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .custom-upload:hover {
+            background-color: #4b4bcc;
+        }
+
+        .image-preview {
+            margin: 20px 0;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .submit-btn {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Upload Your Image</h1>
+    <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+        <label for="file-upload" class="custom-upload">Choose File</label>
+        <input id="file-upload" class="file-upload" type="file" name="image" accept="image/*" onchange="previewImage(event)">
+
+        <div class="image-preview" id="image-preview">
+            <p>Image Preview:</p>
+            <img id="preview-img" alt="Image Preview">
+        </div>
+
+        <button type="submit" class="submit-btn">Upload Image</button>
+    </form>
+    <a th:href="@{/upload}" class="submit-btn" style="background-color: #5a5af0; margin-top: 10px;">Upload Another Image</a>
+</div>
+
+<script>
+    function previewImage(event) {
+        const previewContainer = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        previewImg.src = URL.createObjectURL(event.target.files[0]);
+        previewImg.style.display = 'block';
+        previewContainer.style.display = 'block';
+    }
+</script>

@@ -1,10 +1,401 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agence immobilière</title>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/webjars/sweetalert/2.1.2/dist/sweetalert.min.js">
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #4c4c4c;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    #site {
+        width: 100%; /* Occupe toute la largeur */
+        margin: 0 auto; /* Centre le contenu */
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        grid-gap: 10px;
+        grid-template-areas:
+        "nav header"
+        "nav section"
+        "nav footer";
+    }
+
+
+    header {
+        background-color: #466f69;
+        grid-area: header;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header h1 {
+        font-family: 'Anton', sans-serif;
+        font-size: 52px;
+        letter-spacing: 3px;
+        margin-left: 40px;
+        color: #ccc;
+    }
+
+    nav {
+        background-color: #7f8c8d;
+        grid-area: nav;
+        width: 100%; /* Prend toute la largeur */
+    }
+
+    nav .centrer {
+        text-align: center;
+    }
+
+    nav #navfixe {
+        position: fixed;
+        width: 200px;
+    }
+
+    nav ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    nav ul li {
+        list-style: none;
+        width: 100%;
+        background-color: #e1e1e1;
+        padding: 20px 0;
+        margin-bottom: 5px;
+        text-align: center;
+        transition: 0.5s;
+    }
+
+    nav ul li:hover {
+        background-color: #fff;
+        transition: 0.5s;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #4c4c4c;
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+    }
+
+    section {
+        background-color: #466f69;
+        grid-area: section;
+        padding: 10px;
+        width: 100%; /* Prend toute la largeur */
+    }
+
+    article {
+        background-color: #ecf0f1;
+        padding: 15px;
+        font-size: 14px;
+        text-align: justify;
+        border: 1px solid #333;
+    }
+
+    article h2 {
+        font-size: 30px;
+        text-align: center;
+        color: #466f69;
+    }
+
+    article .articlephoto1 {
+        float: left;
+        margin-right: 10px;
+    }
+
+    article .boitephoto {
+        position: relative;
+        text-align: center;
+    }
+
+    article .phototexte {
+        position: relative;
+        bottom: 50px;
+        font-size: 25px;
+        text-shadow: 5px 5px 5px #fff;
+    }
+
+    footer {
+        background-color: #002f2f;
+        grid-area: footer;
+        padding: 20px;
+    }
+
+    footer p {
+        text-align: center;
+        color: #e6e2af;
+        font-size: 13px;
+    }
+
+    @media screen and (max-width: 899px) {
+        #site {
+            width: 100%;
+            grid-template-columns: 1fr;
+            grid-gap: 5px;
+            grid-template-areas:
+                "header"
+                "nav"
+                "section"
+                "footer";
+        }
+
+        /* Alignement horizontal et centrage de #navfixe */
+        #navfixe {
+            position: static;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column; /* Affiche le logo et les liens en colonne */
+            text-align: center;
+            gap: 10px;
+        }
+
+        /* Centrage de l'image du logo */
+        #navfixe p.centrer {
+            margin: 0;
+        }
+
+        /* Liste en ligne et centrée */
+        #navfixe ul {
+            display: flex;
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* Ajustements de style pour les éléments de la liste */
+        #navfixe ul li {
+            background-color: transparent;
+            padding: 10px;
+            margin: 0;
+        }
+
+        /* Style des liens */
+        #navfixe ul li a {
+            color: #4c4c4c;
+            font-size: 18px;
+        }
+        img{
+            display: none;
+        }
+    }
+/*cards styles*/
+    .card {
+        margin: 15px;
+        border-radius: 10px; /* Coins arrondis pour les cartes */
+        transition: transform 0.3s; /* Effet de transition pour le hover */
+        background-color: #ffffff; /* Fond des cartes */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre des cartes */
+    }
+    .card:hover {
+        transform: translateY(-5px); /* Légère élévation au survol */
+    }
+    .card-body {
+        text-align: center; /* Centrer le contenu de la carte */
+    }
+    .card-title {
+        font-size: 1.5rem; /* Taille du titre */
+        margin-top: 15px; /* Espacement au-dessus du titre */
+        margin-bottom: 10px; /* Espacement en dessous du titre */
+        font-weight: bold; /* Mettre le titre en gras */
+    }
+    .card-text {
+        font-size: 1rem; /* Taille du texte */
+        color: #6c757d; /* Couleur du texte */
+        margin-bottom: 0; /* Pas de marges en bas */
+    }
+    .icon {
+        font-size: 50px; /* Taille des icônes */
+        margin-bottom: 10px; /* Espacement en dessous des icônes */
+        color: #007bff; /* Couleur des icônes */
+    }
+
+</style>
+<div id="site">
+    <header>
+        <h1>CASA ACCOGLIENZA SANTA ANNA</h1>
+        <img th:src="@{/images/0002.png}" alt="logo"/>
+
+
+    </header>
+    <nav>
+        <div id="navfixe">
+            <p class="centrer"><img th:src="@{/images/0002.png}" alt="logo" /></p>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Visiter</a></li>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Visiter</a></li>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Visiter</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section>
+        <article>
+            <div class="container mt-5">
+                <div class="row">
+                    <!-- Carte 1: Maison -->
+                    <div class="col-md-4">
+                        <a th:href="@{/maisons}" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-house-door icon"></i>
+                                    <h5 class="card-title">Case</h5>
+                                    <p class="card-text">Numero totale di case: 50</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Carte 2: Appartements -->
+                    <div class="col-md-4">
+                        <a th:href="@{/appartamenti}" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-building icon"></i>
+                                    <h5 class="card-title">Appartamenti</h5>
+                                    <p class="card-text">Numero totale di appartamenti: 120</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Carte 3: Locataires -->
+                    <div class="col-md-4">
+                        <a th:href="@{/locatari}" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-person-circle icon"></i>
+                                    <h5 class="card-title">Locatari</h5>
+                                    <p class="card-text">Numero totale di locatari: 200</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Carte 4: Contrats -->
+                    <div class="col-md-4">
+                        <a th:href="@{/appartamenti/home}" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-file-earmark-text icon"></i>
+                                    <h5 class="card-title">Contratti</h5>
+                                    <p class="card-text">Numero totale di contratti: 180</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Carte 5: Dépenses -->
+                    <div class="col-md-4">
+                        <a th:href="@{/paralaxe}" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-cash icon"></i>
+                                    <h5 class="card-title">Dépenses</h5>
+                                    <p class="card-text">Totale delle spese: 30,000€</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Carte 6: Travaux -->
+                    <div class="col-md-4">
+                        <a href="page_lavori.html" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-tools icon"></i>
+                                    <h5 class="card-title">Lavori</h5>
+                                    <p class="card-text">Numero totale di lavori: 75</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Carte 7: Prestataires -->
+                    <div class="col-md-4">
+                        <a href="page_prestatori.html" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-person-check icon"></i>
+                                    <h5 class="card-title">Prestatori</h5>
+                                    <p class="card-text">Numero totale di prestatori: 20</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Carte 8: Demandes -->
+                    <div class="col-md-4">
+                        <a href="page_richieste.html" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-bell icon"></i>
+                                    <h5 class="card-title">Richieste</h5>
+                                    <p class="card-text">Numero totale di richieste: 15</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Carte 9: Appartements Disponibles -->
+                    <div class="col-md-4">
+                        <a href="page_appartamenti_disponibili.html" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-house icon"></i>
+                                    <h5 class="card-title">Appartamenti Disponibili</h5>
+                                    <p class="card-text">Numero di appartamenti disponibili: 30</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Carte 10: Appartements Occupés -->
+                    <div class="col-md-4">
+                        <a href="page_appartamenti_occupati.html" class="text-decoration-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <i class="bi bi-door-open icon"></i>
+                                    <h5 class="card-title">Appartamenti Occupati</h5>
+                                    <p class="card-text">Numero di appartamenti occupati: 90</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+    <footer>
+        <p>&copy; Casa Accoglienza</p>
+    </footer>
+</div>
 </body>
 </html>

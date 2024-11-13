@@ -2,11 +2,17 @@ package org.casaaccoglienza.santanna.casaaccoglienzasantanna.entities;
 
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "lavoro")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 public class Lavoro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +27,8 @@ public class Lavoro {
 
     @ManyToOne
     @JoinColumn(name = "maison_id")
-    private Maison maison;
+
+    private Building building;
 
     @ManyToOne
     @JoinColumn(name = "appartamento_id")

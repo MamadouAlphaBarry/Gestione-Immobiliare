@@ -2,11 +2,17 @@ package org.casaaccoglienza.santanna.casaaccoglienzasantanna.entities;
 
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "contratto")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 public class Contratto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +24,10 @@ public class Contratto {
     private double importoAffitto; // montant du loyer
     private double cauzione; // caution
 
-    @ManyToOne
-    @JoinColumn(name = "maison_id")
-    private Maison maison;
 
     @ManyToOne
     @JoinColumn(name = "appartamento_id")
-    private Appartamento appartamento;
+  private Appartamento appartamento;
 
     @ManyToOne
     @JoinColumn(name = "locatario_id")

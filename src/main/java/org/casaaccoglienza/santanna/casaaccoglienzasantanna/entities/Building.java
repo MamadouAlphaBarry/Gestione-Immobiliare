@@ -3,38 +3,38 @@ package org.casaaccoglienza.santanna.casaaccoglienzasantanna.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "maison")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-@Builder
-public class Maison {
+@Entity
+@Table(name = "maison")
+public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String indirizzo; // adresse
-    private int capacita; // capacité
-    private String stato; // état (ex : "buono", "bisogno di riparazioni")
+    private String indirizzo;
+    private int capacita;
+    private String stato;
+    private String via;
+    private int civico;
+    private double latitudine;
+    private double longitudine;
 
-    @OneToMany(mappedBy = "maison", cascade = CascadeType.ALL)
-    private List<Appartamento> appartamenti;
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    private List<Appartamento> appartamenti = new ArrayList<>();
 
-    @OneToMany(mappedBy = "maison", cascade = CascadeType.ALL)
-    private List<Contratto> contratti;
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    private List<Spesa> spese = new ArrayList<>();
 
-    @OneToMany(mappedBy = "maison", cascade = CascadeType.ALL)
-    private List<Spesa> spese;
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    private List<Lavoro> lavori = new ArrayList<>();
 
-    @OneToMany(mappedBy = "maison", cascade = CascadeType.ALL)
-    private List<Lavoro> lavori;
-
-    @OneToMany(mappedBy = "maison", cascade = CascadeType.ALL)
-    private List<Locatario> locatari;
-
-    // Getters and Setters
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    private List<Image> images = new ArrayList<>();
 }
