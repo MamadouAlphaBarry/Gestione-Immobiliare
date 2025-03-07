@@ -1,6 +1,5 @@
 # .github/workflows/ci-pipeline.yml
 name: CI Pipeline
-
 on:
   push:
     branches:
