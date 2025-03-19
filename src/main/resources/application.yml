@@ -1,0 +1,32 @@
+
+spring:
+  application:
+    name: CasaAccoglienzaSantAnna
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/casa?createDatabaseIfNotExist=true"
+    username: postgres
+    password: AlpBar2025AlpBar2025.2
+    driverClassName: org.postgresql.Driver
+    validation-query: "SELECT 1"
+    hikari:
+      maximumPoolSize: 100
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-root.xml
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+server:
+  port: 8093
+#  servlet:
+#    context-path: /api/catalog
+
+
+
