@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Créer une Maison</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background: white;
+        }
+        .image-entry {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background-color: #f0f0f0;
+        }
+        .image-preview img {
+            max-width: 100px;
+            max-height: 100px;
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Créer une Maison</h1>
+    <div class="card">
+        <div class="card-body">
+
+            <form th:action="@{/maisons/save}" th:object="${maison}" method="post" enctype="multipart/form-data">
+                <!-- Other input fields here -->
+                <div class="mb-3 mt-3">
+                    <label for="adresse" class="form-label">Adresse:</label>
+                    <input type="text" id="adresse" class="form-control" th:field="*{indirizzo}" value="*{maison.indirizzo}" required/>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="via" class="form-label">Via:</label>
+                    <input type="text" id="via" class="form-control" th:field="*{via}" value="*{maison.via}" required/>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="cap" class="form-label">CAP:</label>
+                    <input type="text" id="cap" class="form-control" th:field="*{civico}"  value="*{maison.civico}" required/>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="capacite">Capacité:</label>
+                    <input type="number" id="capacite" class="form-control" th:field="*{capacita}" required/>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="etat">État:</label>
+                    <input type="text" id="etat" class="form-control" th:field="*{stato}" required/>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="longitudine">Longitudine:</label>
+                    <input type="text" id="longitudine" class="form-control" th:field="*{longitudine}" required/>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="latitudine">Latitudine:</label>
+                    <input type="text" id="latitudine" class="form-control" th:field="*{latitudine}" required/>
+                </div>
+                <!-- Images Section -->
+                <div class="mb-3">
+                    <label class="form-label">Images</label>
+                    <div id="images-container">
+                        <div class="image-entry">
+                            <label for="imageFile" class="form-label">Image</label>
+                            <input id="imageFile0" type="file" class="form-control" name="files" accept="image/*" required onchange="previewImage(event, 'preview-img0')">
+                            <div class="image-preview">
+                                <img id="preview-img0" alt="Image Preview">
+                            </div>
+                            <label for="imageCaption0" class="form-label mt-2">Légende de l'image</label>
+                            <input id="imageCaption0" type="text" class="form-control" name="captions" placeholder="Entrez la légende" required>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary" onclick="addImageField()">Ajouter une Image</button>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let imageIndex = 1;
+
+    function previewImage(event, previewId) {
+        const previewImg = document.getElementById(previewId);
+        previewImg.src = URL.createObjectURL(event.target.files[0]);
+        previewImg.style.display = 'block';
+    }
+
+    function addImageField() {
+        const imagesContainer = document.getElementById('images-container');
+
+        const newImageEntry = document.createElement('div');
+        newImageEntry.classList.add('image-entry');
+
+        // Unique IDs for new elements
+        const imageFileId = `imageFile${imageIndex}`;
+        const previewImgId = `preview-img${imageIndex}`;
+        const imageCaptionId = `imageCaption${imageIndex}`;
+
+        newImageEntry.innerHTML = `
+            <label for="${imageFileId}" class="form-label">Image</label>
+            <input id="${imageFileId}" type="file" class="form-control" name="images[${imageIndex}].file" accept="image/*" required onchange="previewImage(event, '${previewImgId}')">
+            <div class="image-preview">
+                <img id="${previewImgId}" alt="Image Preview">
+            </div>
+            <label for="${imageCaptionId}" class="form-label mt-2">Légende de l'image</label>
+            <input id="${imageCaptionId}" type="text" class="form-control" name="images[${imageIndex}].caption" placeholder="Entrez la légende" required>
+        `;
+
+        imagesContainer.appendChild(newImageEntry);
+        imageIndex++;
+    }
+</script>
+
+</body>
+</html>

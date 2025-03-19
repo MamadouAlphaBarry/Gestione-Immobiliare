@@ -1,6 +1,7 @@
 package org.casaaccoglienza.santanna.casaaccoglienzasantanna.controllers;
 
 import org.casaaccoglienza.santanna.casaaccoglienzasantanna.entities.Locatario;
+import org.casaaccoglienza.santanna.casaaccoglienzasantanna.services.LocatarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,5 +35,4 @@ public class LocatarioController {
         return "redirect:/locatari";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editLocat
+}

@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+    <title>Modifier Appartement</title>
+  </head>
 <body>
-
+<div class="container mt-5">
+    <h1>Modifier l'Appartement</h1>
+    <form th:action="@{/appartamento/update}" th:object="${appartamento}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="mb-3">
+            <label for="numero" class="form-label">Numéro <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="numero" th:field="*{numero}" required>
+        </div>
+        <div class="mb-3">
+            <label for="superficie" class="form-label">Superficie (m²) <span class="text-danger">*</span></label>
+            <input type="number" class="form-control" id="superficie" th:field="*{superficie}" required>
+        </div>
+        <div class="mb-3">
+            <label for="maison" class="form-label">Maison <span class="text-danger">*</span></label>
+            <select class="form-select" id="maison" th:field="*{maison}" required>
+                <option th:each="maison : ${maisons}"
+                        th:value="${maison.id}"
+                        th:text="${maison.nom}"
+                        th:selected="${maison.id == appartamento.maison.id}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+        <a href="@{/appartamento/list}" class="btn btn-secondary">Annuler</a>
+    </form>
+    <div th:if="${successMessage}" class="alert alert-success mt-3" role="alert">
+        <p th:text="${successMessage}"></p>
+    </div>
+</div>
 </body>
 </html>

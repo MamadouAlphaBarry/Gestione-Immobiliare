@@ -1,12 +1,18 @@
 package org.casaaccoglienza.santanna.casaaccoglienzasantanna.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 
 import java.util.Date;
 
 @Entity
 @Table(name = "spesa")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 public class Spesa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +25,7 @@ public class Spesa {
 
     @ManyToOne
     @JoinColumn(name = "maison_id")
-    private Maison maison;
+    private Building building;
 
     @ManyToOne
     @JoinColumn(name = "appartamento_id")

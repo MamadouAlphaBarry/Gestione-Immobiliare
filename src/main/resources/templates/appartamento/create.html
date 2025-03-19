@@ -1,10 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Ajouter Appartement</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+
+<div class="container mt-5">
+    <h1>Ajouter un Appartement</h1>
+    <form th:action="@{/appartamento/save}" th:object="${appartamento}" method="post">
+        <!-- Apartment Number -->
+        <div class="mb-3">
+            <label for="numero" class="form-label">Numéro <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="numero" th:field="*{numero}" required>
+        </div>
+
+        <!-- Surface -->
+        <div class="mb-3">
+            <label for="superficie" class="form-label">Superficie (m²) <span class="text-danger">*</span></label>
+            <input type="number" class="form-control" id="superficie" th:field="*{superficie}" required>
+        </div>
+
+        <!-- Maison Select -->
+        <div class="mb-3">
+            <label for="maison" class="form-label">Maison <span class="text-danger">*</span></label>
+            <select class="form-select" id="maison" th:field="*{maison}" required>
+                <option th:each="maison : ${maisons}"
+                        th:value="${maison.id}"
+                        th:text="${maison.nom}"></option>
+            </select>
+        </div>
+
+        <!-- Image Section -->
+        <div class="mb-3">
+            <label class="form-label">Images</label>
+            <div id="images-container">
+                <div class="image-entry mb-3">
+                    <label for="imageUrl" class="form-label">Choisissez une image</label>
+                    <input type="file" class="form-control" name="files" placeholder="Choisissez une image">
+
+                    <label for="imageCaption" class="form-label mt-2">Légende de l'image</label>
+                    <input type="text" class="form-control" name="captions" placeholder="Entrez la légende">
+
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline-primary mt-3" onclick="addImageField()">Ajouter une Image</button>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <a href="@{/appartamento/list}" class="btn btn-secondary">Annuler</a>
+    </form>
+
+    <!-- Success Message -->
+    <div th:if="${successMessage}" class="alert alert-success mt-3" role="alert">
+        <p th:text="${successMessage}"></p>
+    </div>
+</div>
+
+<script>
+    let imageIndex = 1;
+
+    function addImageField() {
+        // Container for new image fields
+        const imagesContainer = document.getElementById('images-container');
+
+        // New image entry HTML
+        const newImageEntry = document.createElement('div');
+        newImageEntry.classList.add('image-entry', 'mb-3');
+
+        newImageEntry.innerHTML = `
+            <label class="form-label">URL de l'image</label>
+            <input type="text" class="form-control" name="images[${imageIndex}].url" placeholder="Entrez l'URL de l'image">
+            <label class="form-label mt-2">Légende de l'image</label>
+            <input type="text" class="form-control" name="images[${imageIndex}].caption" placeholder="Entrez la légende">
+        `;
+
+        // Append to images container
+        imagesContainer.appendChild(newImageEntry);
+
+        // Increment index for unique names
+        imageIndex++;
+    }
+</script>
 
 </body>
 </html>

@@ -1,10 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html"
+>
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Liste des Maisons</title>
 </head>
 <body>
+<div layout:fragment="content">
+  <div class="ps-3 mt-3">
+
+    <a class="btn  btn-block btn-outline-success my-3" th:href="@{/maisons/create}">Créer une Maison</a>
+    <div th:if="${totalMaisons}">
+      <div class="card">
+        <div class="card-header"><h1 class="text text-center h2">Liste des Maisons</h1></div>
+        <div class="card-body">
+
+          <table class="table table-hover table-responsive">
+            <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Adresse</th>
+              <th>Via</th>
+              <th>CAP</th>
+              <th>Capacité</th>
+              <th>État</th>
+              <th>Longetidune</th>
+              <th>Latitudine</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="maison : ${maisons}">
+              <td th:text="${maison.id}"></td>
+              <td th:text="${maison.indirizzo}"></td>
+              <td th:text="${maison.via}"></td>
+              <td th:text="${maison.civico}"></td>
+              <td th:text="${maison.capacita}"></td>
+              <td th:text="${maison.stato}"></td>
+              <td th:text="${maison.latitudine}"></td>
+              <td th:text="${maison.longitudine}"></td>
+              <td>
+                <a class="btn btn-primary" th:href="@{/maisons/edit/{id}(id=${maison.id})}"><i class="ml-3 bi bi-pencil-square"></i></a>
+                <a class="btn btn-danger" th:href="@{/maisons/delete/{id}(id=${maison.id})}"><i class="ml-3 bi bi-trash"></i></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+          <ul class="pagination">
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="btn btn-primary page-link" href="#">1</a></li>
+            <li class="page-item"><a class=" btn btn-primary  page-link" href="#">2</a></li>
+            <li class="page-item"><a class="btn btn-primary page-link" href="#">3</a></li>
+            <li class="page-item"><a class=" btn btn-primary page-link" href="#">Next</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div th:unless="${totalMaisons}">
+      <div class="row">
+        <div class="col-8 offset-4">
+          <div class="card bg-warning text-white">
+            <div class="card-body">Warning card</div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>
+
 
 </body>
 </html>

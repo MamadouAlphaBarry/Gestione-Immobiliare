@@ -1,11 +1,17 @@
 package org.casaaccoglienza.santanna.casaaccoglienzasantanna.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "richiesta")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 public class Richiesta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

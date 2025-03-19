@@ -1,23 +1,32 @@
 package org.casaaccoglienza.santanna.casaaccoglienzasantanna.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-import javax.persistence.*;
+
 import java.util.List;
 
 @Entity
 @Table(name = "appartamento")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 public class Appartamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String numero; // numero
+    private int numeroDuCase; // numero
     private double superficie; // surface
-
+    private String via;
+    private double latitudine ;
+    private double longitudine ;
+    private int numero;
     @ManyToOne
     @JoinColumn(name = "maison_id")
-    private Maison maison;
+    private Building building;
 
     @OneToMany(mappedBy = "appartamento", cascade = CascadeType.ALL)
     private List<Contratto> contratti;
@@ -27,6 +36,7 @@ public class Appartamento {
 
     @OneToOne(mappedBy = "appartamento", cascade = CascadeType.ALL)
     private Locatario locatario;
-
+    @OneToMany(mappedBy = "appartamento", cascade = CascadeType.ALL)
+    private List<Image> images;
     // Getters and Setters
 }
